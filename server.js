@@ -17,7 +17,11 @@ var express = require("express")
   , app = express()
   , http = require("http").createServer(app)
   , io = require("socket.io").listen(http)
-  , _ = require("underscore");
+  , _ = require("underscore")
+  , fs = require('fs')
+
+  , cloudinary = require('cloudinary')
+   ;
 
 /*
  The list of participants in our chatroom.
@@ -35,7 +39,7 @@ var participants = []
 app.set("ipaddr", "127.0.0.1");
 
 //Server's port number
-app.set("port", 8080);
+app.set("port", 3000);
 
 //Specify the views folder
 app.set("views", __dirname + "/views");
@@ -48,6 +52,11 @@ app.use(express.static("public", __dirname + "/public"));
 
 //Tells server to support JSON, urlencoded, and multipart requests
 app.use(express.bodyParser());
+
+app.use(express.errorHandler());
+
+
+// loads foundation as a stylus
 
 /* Server routing */
 
@@ -81,6 +90,12 @@ app.post("/message", function(request, response) {
 
 });
 
+app.post('/upload', function(req, res){
+  var imageStream = fs.createReadStream(req.files.image.path, { encoding: 'binary' })
+    , cloudStream = cloudinary.uploader.upload_stream(function() { res.redirect('/'); });
+
+  imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
+});
 /* Socket.IO events */
 io.on("connection", function(socket){
 
@@ -115,6 +130,15 @@ io.on("connection", function(socket){
   });
 
 });
+
+	/*cloudinary config*/
+cloudinary.config({ 
+  cloud_name: 'easedrop', 
+  api_key: '289826477154579', 
+  api_secret: 'yeDwU5_OfFmqUyPl0e-Mf2w0k3U' 
+});
+app.locals.api_key = cloudinary.config().api_key;
+app.locals.cloud_name = cloudinary.config().cloud_name;
 
 //Start the http server at port and IP defined before
 http.listen(app.get("port"), app.get("ipaddr"), function() {

@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-express-socketio-chatroom",
+  "name": "easdrop",
   "version": "1.0.0",
   "description": "A simple chatroom",
   "keywords": [
@@ -10,14 +10,14 @@
     "chatroom"
   ],
   "author": {
-    "name": "William Mora",
-    "email": "william.r.mora@gmail.com",
-    "url":  "http://www.williammora.com/"
+    "name": "Ian MacDowell",
+    "email": "ianmacdowell13@gmail.com",
+    "url":  "http://easedrop.in/"
   },
-  "homepage": "http://www.williammora.com/",
+  "homepage": "http://easedrop.in/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wmora/nodejs-express-socketio-chatroom.git"
+    "url": "https://github.com/ijmacdowell/easedrop"
   },
   "engines": {
     "node": ">= 0.6.0",
@@ -25,13 +25,23 @@
   },
   "dependencies": {
     "express": "3.1.0",
-    "jade": "*",
     "socket.io": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "cloudinary": "*",
+    "angular":"*",
+    "dot":"*",
+    "stylus":"*",
+    "tasks": "*",
+    "mongoose":"*",
+    "mongodb": ">=0.9.9-4",
+    "request": ">= 2.9.152",
+    "jade": ">= 0.0.1"
+    
+    
   },
   "devDependencies": {},
   "bundleDependencies": [],
-  "license": "MIT",
+  "license": "GPL",
   "main": "server.js"
 }
 
